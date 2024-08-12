@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Prediction</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Weather Prediction</h1>
+        <form action="/predict" method="post" class="mt-4">
+            <div class="form-group">
+                <label for="temperature">Temperature (°C):</label>
+                <input type="number" step="0.01" name="temperature" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="humidity">Humidity (%):</label>
+                <input type="number" step="0.01" name="humidity" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Predict Weather</button>
+        </form>
+    </div>
+</body>
+</html>
