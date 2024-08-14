@@ -8,7 +8,6 @@
     <meta http-equiv="refresh" content="20">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        
         .header-bar {
             background-color: #CDE8E5;
             padding: 10px 0;
@@ -16,6 +15,16 @@
             color: #000;
         }
         
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-body {
+            text-align: center;
+        }
+
         footer {
             background-color: #CDE8E5;
             padding: 10px 0;
@@ -24,10 +33,12 @@
             margin-top: 20px;
             border-top: 1px solid #000;
         }
+        
         footer a {
             color: #000;
             text-decoration: none;
         }
+        
         footer a:hover {
             text-decoration: underline;
         }
@@ -39,17 +50,46 @@
     </div>
 
     <div class="container mt-5">
-        <div class="card mt-4">
-            <div class="card-body">
-                <h5 class="card-title">
-                    Current Weather Report At
-                    <br></br>
-                    <small class="text-muted">Date: {{ current_date }} Time: {{ current_time }}</small>
-                </h5>
-                <p class="card-text">Temperature: {{ temperature }}°C</p>
-                <p class="card-text">Humidity: {{ humidity }}%</p>
-                <p>Predicted Weather Condition: <strong>{{ prediction }}</strong></p>
-                <img src="{{ url_for('static', filename='assets/' + prediction_image) }}" alt="{{ prediction }}" class="img-fluid mt-3">
+        <!-- Row 1: Temperature and Humidity -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Temperature</h5>
+                        <p class="card-text">{{ temperature }}°C</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Humidity</h5>
+                        <p class="card-text">{{ humidity }}%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Row 2: Predicted Weather Condition -->
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Predicted Weather Condition</h5>
+                        <p class="card-text"><strong>{{ prediction }}</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Row 3: Weather Image -->
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="{{ url_for('static', filename='assets/' + prediction_image) }}" alt="{{ prediction }}" class="img-fluid">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
