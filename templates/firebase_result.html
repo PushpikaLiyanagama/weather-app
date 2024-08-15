@@ -8,17 +8,33 @@
     <meta http-equiv="refresh" content="20">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            background-image: url('static/assets/b.jpg');
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+            background-position: center; 
+        }
         .header-bar {
-            background-color: #CDE8E5;
+            background-color: rgba(205, 232, 229, 0.8);
             padding: 10px 0;
             text-align: center;
             color: #000;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000; /* Ensures it stays on top of other content */
         }
         
+        .container {
+            margin-top: 200px; /* Add margin to avoid overlap with the fixed header */
+        }
+
         .card {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border-radius: 15px;
             margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
         }
 
         .card-body {
@@ -26,7 +42,7 @@
         }
 
         footer {
-            background-color: #CDE8E5;
+            background-color: rgba(205, 232, 229, 0.8);
             padding: 10px 0;
             text-align: center;
             color: #000;
@@ -44,10 +60,12 @@
         }
     </style>
 </head>
-<body class="bg-light">
+<body>
     <div class="header-bar">
         <h1>Weather Reporter</h1>
     </div>
+    <br></br>
+    <br></br>
 
     <div class="container mt-5">
         <!-- Row 1: Temperature and Humidity -->
