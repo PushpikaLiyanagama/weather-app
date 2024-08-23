@@ -13,9 +13,9 @@ model = pickle.load(open('finalModel.pkl', 'rb'))
 label_encoder = pickle.load(open('finalEncoder.pkl', 'rb'))
 
 # Credeitials for firebase
-cred = credentials.Certificate('weather-predictor-with-dht11-firebase-adminsdk-cm6w2-877a3b4fb1.json')
+cred = credentials.Certificate('your-credential-file.json')
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://weather-predictor-with-dht11-default-rtdb.asia-southeast1.firebasedatabase.app'
+    'databaseURL': 'your-database-url'
 })
 
 @app.route('/')
