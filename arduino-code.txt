@@ -1,0 +1,83 @@
+#include <WiFi.h>
+#include <FirebaseESP32.h>
+#include "DHT.h"
+
+const char* ssid = "realme 9";
+const char* password = "pushpika12";
+
+#define FIREBASE_HOST "weather-predictor-with-dht11-default-rtdb.asia-southeast1.firebasedatabase.app/"
+#define FIREBASE_AUTH "dn5mmK9hQgIfSZ8Gi5tvZl90fJCLNPlJhxkU31Gh"
+
+
+#define DHTPIN 4      
+#define DHTTYPE DHT11 
+
+DHT dht(DHTPIN, DHTTYPE);
+
+FirebaseData firebaseData;
+FirebaseConfig firebaseConfig;
+FirebaseAuth firebaseAuth;
+
+void setup() {
+  Serial.begin(115200);
+  dht.begin();
+
+  WiFi.begin(ssid, password);
+  Serial.print("Connecting to Wi-Fi...");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+  Serial.println("Connected to Wi-Fi");
+
+  firebaseConfig.host = FIREBASE_HOST;
+  firebaseConfig.signer.tokens.legacy_token = FIREBASE_AUTH;
+
+
+  Firebase.begin(&firebaseConfig, &firebaseAuth);
+  Firebase.reconnectWiFi(true);
+
+  Firebase.setMaxRetry(firebaseData, 3);
+}
+
+void loop() {
+  delay(2000);
+
+  // Read temperature as Celsius and Fahrenheit
+  float temperature = dht.readTemperature();
+  float temperatureF = dht.readTemperature(true);
+  // Read humidity
+  float humidity = dht.readHumidity();
+
+  if (isnan(temperature) || isnan(humidity)) {
+    Serial.println("Failed to read from DHT sensor!");
+    return;
+  }
+
+  // Print to Serial Monitor
+  Serial.print("Humidity: ");
+  Serial.print(humidity);
+  Serial.print(" %\t");
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.print(" °C ");
+
+
+  // Upload data to Firebase
+  String path = "/sensorData"; // The path in your database where data will be stored
+
+  if (Firebase.setFloat(firebaseData, path + "/temperature", temperature)) {
+    Serial.println("Temperature uploaded successfully");
+  } else {
+    Serial.print("Failed to upload temperature: ");
+    Serial.println(firebaseData.errorReason());
+  }
+
+  if (Firebase.setFloat(firebaseData, path + "/humidity", humidity)) {
+    Serial.println("Humidity uploaded successfully");
+  } else {
+    Serial.print("Failed to upload humidity: ");
+    Serial.println(firebaseData.errorReason());
+  }
+}
